@@ -1,0 +1,17 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Sim-Fluence simulates social media engagement using AI, helping creators test and optimize posts before publishing.",
+  "main": "app.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "automation",
+    "ai",
+    "linkedin",
+    "x"
+  ],
+  "author": "Sim-Fluence",
+  "license": "MIT"
+}
