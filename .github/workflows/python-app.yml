@@ -38,15 +38,13 @@ jobs:
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
-    - name: Check for test files
-      id: check_tests
+    - name: Test with pytest (don't fail if no tests)
       run: |
-        if find . -name "test_*.py" | grep -q .; then
-          echo "found=true" >> $GITHUB_OUTPUT
+        echo "Running pytest..."
+        pytest || EXIT_CODE=$?
+        if [ "$EXIT_CODE" -eq 5 ]; then
+          echo "No tests found. Skipping test failure."
+          exit 0
         else
-          echo "found=false" >> $GITHUB_OUTPUT
+          exit $EXIT_CODE
         fi
-
-    - name: Test with pytest
-      if: steps.check_tests.outputs.found == 'true'
-      run: pytest
