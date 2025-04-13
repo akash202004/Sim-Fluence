@@ -4,13 +4,13 @@ on:
   push:
     branches: [ "main" ]
     paths:
-      - '**.py'               # Trigger only if any Python files change
-      - 'requirements.txt'    # Trigger if the dependencies change
+      - '**.py'
+      - 'requirements.txt'
   pull_request:
     branches: [ "main" ]
     paths:
-      - '**.py'               # Trigger only if any Python files change
-      - 'requirements.txt'    # Trigger if the dependencies change
+      - '**.py'
+      - 'requirements.txt'
 
 permissions:
   contents: read
@@ -38,10 +38,15 @@ jobs:
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
-    - name: Test with pytest
+    - name: Check for test files
+      id: check_tests
       run: |
         if find . -name "test_*.py" | grep -q .; then
-          pytest
+          echo "found=true" >> $GITHUB_OUTPUT
         else
-          echo "No test files found. Skipping pytest."
+          echo "found=false" >> $GITHUB_OUTPUT
         fi
+
+    - name: Test with pytest
+      if: steps.check_tests.outputs.found == 'true'
+      run: pytest
