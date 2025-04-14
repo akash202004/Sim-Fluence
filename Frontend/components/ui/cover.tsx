@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useId, useState } from "react";
+import React, { useEffect, useId, useState, useMemo, useCallback } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { useRef } from "react";
 import { cn } from "@/lib/utils";
@@ -13,32 +13,45 @@ export const Cover = ({
   className?: string;
 }) => {
   const [hovered, setHovered] = useState(false);
-
   const ref = useRef<HTMLDivElement>(null);
-
   const [containerWidth, setContainerWidth] = useState(0);
   const [beamPositions, setBeamPositions] = useState<number[]>([]);
 
+  // Optimize the effect to run only when needed
   useEffect(() => {
-    if (ref.current) {
-      setContainerWidth(ref.current?.clientWidth ?? 0);
-
-      const height = ref.current?.clientHeight ?? 0;
-      const numberOfBeams = Math.floor(height / 10); // Adjust the divisor to control the spacing
+    if (!ref.current) return;
+    
+    const updateDimensions = () => {
+      if (!ref.current) return;
+      
+      setContainerWidth(ref.current.clientWidth);
+      const height = ref.current.clientHeight;
+      // Reduce the number of beams for better performance
+      const numberOfBeams = Math.min(Math.floor(height / 20), 10); 
       const positions = Array.from(
         { length: numberOfBeams },
         (_, i) => (i + 1) * (height / (numberOfBeams + 1))
       );
       setBeamPositions(positions);
-    }
-  }, [ref.current]);
+    };
+
+    updateDimensions();
+    
+    // Add resize listener
+    window.addEventListener('resize', updateDimensions);
+    return () => window.removeEventListener('resize', updateDimensions);
+  }, []);
+
+  // Memoize handlers to prevent unnecessary re-renders
+  const handleMouseEnter = useCallback(() => setHovered(true), []);
+  const handleMouseLeave = useCallback(() => setHovered(false), []);
 
   return (
     <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       ref={ref}
-      className="relative hover:bg-neutral-900  group/cover inline-block dark:bg-neutral-900 bg-neutral-100 px-2 py-2  transition duration-200 rounded-sm"
+      className="relative hover:bg-neutral-900 group/cover inline-block dark:bg-neutral-900 bg-neutral-100 px-2 py-2 transition duration-200 rounded-sm"
     >
       <AnimatePresence>
         {hovered && (
@@ -66,11 +79,12 @@ export const Cover = ({
               }}
               className="w-[200%] h-full flex"
             >
+              {/* Reduce particle density for better performance */}
               <SparklesCore
                 background="transparent"
                 minSize={0.4}
                 maxSize={1}
-                particleDensity={500}
+                particleDensity={200}
                 className="w-full h-full"
                 particleColor="#FFFFFF"
               />
@@ -78,7 +92,7 @@ export const Cover = ({
                 background="transparent"
                 minSize={0.4}
                 maxSize={1}
-                particleDensity={500}
+                particleDensity={200}
                 className="w-full h-full"
                 particleColor="#FFFFFF"
               />
@@ -86,7 +100,9 @@ export const Cover = ({
           </motion.div>
         )}
       </AnimatePresence>
-      {beamPositions.map((position, index) => (
+      
+      {/* Limit the number of beams rendered */}
+      {beamPositions.slice(0, 5).map((position, index) => (
         <Beam
           key={index}
           hovered={hovered}
@@ -98,6 +114,7 @@ export const Cover = ({
           }}
         />
       ))}
+      
       <motion.span
         key={String(hovered)}
         animate={{

@@ -15,6 +15,9 @@ const nextConfig = {
         hostname: 'unsplash.com',
       },
     ],
+    // Add image optimization settings
+    formats: ['image/avif', 'image/webp'],
+    minimumCacheTTL: 60,
   },
   reactStrictMode: true,
   // This will help with the hydration error by forcing client-side rendering
@@ -23,6 +26,10 @@ const nextConfig = {
     // This setting helps with components that generate random values
     optimizeFonts: true,
     scrollRestoration: true,
+    // Add optimizations for production builds
+    optimizePackageImports: ['motion'],
+    // Improve bundle size
+    optimizeCss: true,
   }
 }
 
