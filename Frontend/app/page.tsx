@@ -19,6 +19,8 @@ import person1 from "../public/testimonial/Soumaditya.jpg";
 import person2 from "../public/testimonial/Akash.jpg"; 
 import person3 from "../public/testimonial/Nachiketa.jpg";
 import person4 from "../public/testimonial/MU.jpg"
+import { OrbitingCircles } from "@/components/ui/circle";
+import { File, Settings, Search } from "lucide-react";
 
 // Add loading options to reduce layout shift
 const AnimatedTestimonials = dynamic(
@@ -198,16 +200,76 @@ export default function Home() {
           </Suspense>
         </div>
         
+        {/* Testimonials section with OrbitingCircles */}
         <div className="w-full max-w-6xl mt-16">
-          <h2 className="text-4xl font-semibold text-white mb-6">
-            <span className="text-blue-500">What</span> Our Users Say
-          </h2>
-          <Suspense fallback={<div className="w-full h-[400px] bg-black/20 rounded-lg animate-pulse"></div>}>
-            <AnimatedTestimonials 
-              testimonials={testimonials.map(t => ({ ...t, src: t.src.src }))} 
-              autoplay={true} 
-            />
-          </Suspense>
+          <div className="flex flex-col md:flex-row gap-8 xl:border rounded-md dark:border-neutral-800 border-white/10 p-4 sm:p-8">
+            {/* Testimonials */}
+            <div className="md:w-2/3 md:border-r dark:border-neutral-800 border-white/10 pr-4 sm:pr-8">
+              <Suspense fallback={<div className="w-full h-[400px] bg-black/20 rounded-lg animate-pulse"></div>}>
+                <AnimatedTestimonials 
+                  testimonials={testimonials.map(t => ({ ...t, src: t.src.src }))} 
+                  autoplay={true} 
+                />
+              </Suspense>
+            </div>
+            
+            {/* OrbitingCircles beside testimonials */}
+            <div className="relative md:w-1/3 h-[400px] overflow-hidden">
+              <div className="absolute inset-0 flex items-center justify-center">
+                <OrbitingCircles className="text-white/70" iconSize={35}>
+                  <div className="border-2 border-white p-2 rounded-full bg-black/50">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                    </svg>
+                  </div>
+                  <div className="border-2 border-white p-2 rounded-full bg-black/50">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                      <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
+                    </svg>
+                  </div>
+                  <div className="border-2 border-white p-2 rounded-full bg-black/50">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                    </svg>
+                  </div>
+                </OrbitingCircles>
+                
+                <OrbitingCircles radius={120} reverse className="text-white/70" iconSize={28}>
+                  <div className="border-2 border-white p-2 rounded-full bg-black/50">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                      <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+                      <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+                    </svg>
+                  </div>
+                  <div className="border-2 border-white p-2 rounded-full bg-black/50">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                      <rect x="2" y="9" width="4" height="12"></rect>
+                      <circle cx="4" cy="4" r="2"></circle>
+                    </svg>
+                  </div>
+                  <div className="border-2 border-white p-2 rounded-full bg-black/50">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                      <path d="M12 2a10 10 0 0 0-3.16 19.5c.5.08.66-.22.66-.48v-1.7c-2.67.6-3.23-1.13-3.23-1.13-.44-1.1-1.08-1.4-1.08-1.4-.88-.6.07-.6.07-.6.97.07 1.48 1 1.48 1 .87 1.52 2.27 1.07 2.83.82.08-.65.35-1.09.63-1.34-2.13-.25-4.37-1.07-4.37-4.76 0-1.05.37-1.93 1-2.6-.1-.25-.43-1.22.09-2.55 0 0 .84-.27 2.75 1.02A9.58 9.58 0 0 1 12 6.1c.85 0 1.7.1 2.5.34 1.9-1.29 2.74-1.02 2.74-1.02.52 1.33.19 2.3.1 2.55.62.67 1 1.55 1 2.6 0 3.7-2.25 4.5-4.4 4.75.36.3.68.9.68 1.8v2.67c0 .27.16.57.67.48A10 10 0 0 0 12 2z"></path>
+                    </svg>
+                  </div>
+                  <div className="border-2 border-white p-2 rounded-full bg-black/50">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                      <path d="M7 10v12"></path>
+                      <path d="M15 10v12"></path>
+                      <path d="M11 14v8"></path>
+                      <path d="M11 2v8"></path>
+                      <rect x="3" y="10" width="4" height="12"></rect>
+                      <rect x="17" y="10" width="4" height="12"></rect>
+                      <path d="M7 2h10v8H7z"></path>
+                    </svg>
+                  </div>
+                </OrbitingCircles>
+              </div>
+            </div>
+          </div>
         </div>
       </main>
     </div>
