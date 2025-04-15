@@ -4,7 +4,7 @@
   "description": "Sim-Fluence simulates social media engagement using AI, helping creators test and optimize posts before publishing.",
   "main": "app.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "nodemon --exec ts-node src/app.ts"
   },
   "keywords": [
     "automation",
@@ -13,5 +13,14 @@
     "x"
   ],
   "author": "Sim-Fluence",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@types/express": "^5.0.1",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "nodemon": "^3.1.9",
+    "prisma": "^6.6.0",
+    "typescript": "^5.8.3",
+    "zod": "^3.24.2"
+  }
 }
