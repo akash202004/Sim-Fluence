@@ -4,7 +4,8 @@
   "description": "Sim-Fluence simulates social media engagement using AI, helping creators test and optimize posts before publishing.",
   "main": "app.ts",
   "scripts": {
-    "test": "nodemon --exec ts-node src/app.ts"
+    "test": "nodemon --exec ts-node src/app.ts",
+    "postinstall": "npx prisma generate"
   },
   "keywords": [
     "automation",
@@ -15,6 +16,7 @@
   "author": "Sim-Fluence",
   "license": "MIT",
   "dependencies": {
+    "@prisma/client": "^6.6.0",
     "@types/express": "^5.0.1",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",

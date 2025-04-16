@@ -6,7 +6,6 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -15,9 +14,95 @@ datasource db {
 }
 
 model User {
-  id            String        @id @default(uuid())
-  email         String        @unique
-  name          String?
-  createdAt     DateTime      @default(now())
-  // simulations   Simulation[]
+  id               String          @id @default(uuid())
+  email            String          @unique
+  name             String?
+  profileImageUrl  String?         
+  createdAt        DateTime        @default(now())
+  simulations      Simulation[]
+
+  @@index([email])
+  @@index([id])
+}
+
+model Simulation {
+  id               String          @id @default(uuid())
+  title            String          
+  content          String          
+  status           String          @default("PENDING") 
+  createdAt        DateTime        @default(now())
+  userId           String
+  user             User            @relation(fields: [userId], references: [id])
+  
+  platform         Platform          
+  impressions      Int             @default(0)
+  likesEstimate    Int             @default(0)
+  commentsEstimate Int             @default(0)
+
+  agentReactions   AgentReaction[]
+  summary          Summary?
+  summaryId        String?
+
+  PostSuggestion PostSuggestion[]
+
+  @@index([userId])
+  @@index([id])
+  @@index([platform])
+  @@index([createdAt])
+}
+
+
+enum Platform {
+  FACEBOOK
+  INSTAGRAM
+  TWITTER
+  LINKEDIN
+}
+
+model AgentReaction {
+  id               String          @id @default(uuid())
+  simulationId     String
+  agentName        String          
+  action           String          
+  reason           String          
+  sentiment        String?         
+
+  simulation       Simulation      @relation(fields: [simulationId], references: [id])
+
+  @@index([simulationId])
+  @@index([id])
+}
+
+model PostSuggestion {
+  id             String     @id @default(uuid())
+  simulationId   String
+  suggestionText String     
+  applied        Boolean    @default(false) 
+  createdAt      DateTime   @default(now())
+
+  simulation     Simulation @relation(fields: [simulationId], references: [id])
+
+  @@index([simulationId])
+  @@index([id])
+  @@index([applied])
+}
+
+model Summary {
+  id               String   @id @default(uuid())
+  simulationId     String   @unique
+  summaryText      String
+  toneCloud        Json
+  toneBreakdown    Json     
+  sectionFeedback  Json     
+  engagementData   Json     
+  audienceMatch    String?  
+  feedbackScore    Int?     
+  createdAt        DateTime @default(now())
+
+  simulation       Simulation @relation(fields: [simulationId], references: [id])
+
+  @@index([simulationId])
+  @@index([id])
+  @@index([createdAt])
+
 }
