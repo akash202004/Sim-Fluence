@@ -29,7 +29,7 @@ model Simulation {
   id               String          @id @default(uuid())
   title            String          
   content          String          
-  status           String          @default("PENDING") 
+  status           Status          @default(PENDING) 
   createdAt        DateTime        @default(now())
   userId           String
   user             User            @relation(fields: [userId], references: [id])
@@ -49,6 +49,13 @@ model Simulation {
   @@index([id])
   @@index([platform])
   @@index([createdAt])
+}
+
+enum Status {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  FAILED
 }
 
 

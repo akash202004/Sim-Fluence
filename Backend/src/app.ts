@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-app.get('/', )
+app.get('/api/v1/user', )
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

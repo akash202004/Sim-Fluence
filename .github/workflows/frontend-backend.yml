@@ -1,4 +1,4 @@
-name: Fullstack CI Check 
+name: Sim-Fluence CI Check 
 
 on:
   push:
