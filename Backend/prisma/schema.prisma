@@ -58,7 +58,6 @@ enum Status {
   FAILED
 }
 
-
 enum Platform {
   FACEBOOK
   INSTAGRAM
