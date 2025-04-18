@@ -11,10 +11,11 @@ import {
   MobileNavToggle, 
   NavbarButton 
 } from "@/components/ui/resizable-navbar";
-import { useState, Suspense, lazy } from "react";
+import { useState, Suspense } from "react";
 import Link from "next/link";
 import dynamic from 'next/dynamic';
-// Import testimonial images
+import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+
 import person1 from "../public/testimonial/Soumaditya.jpg";
 import person2 from "../public/testimonial/Akash.jpg"; 
 import person3 from "../public/testimonial/Nachiketa.jpg";
@@ -60,7 +61,7 @@ export default function Home() {
     { name: "About", link: "/about" },
   ];
 
-  // Memoize testimonials data to prevent unnecessary re-renders
+  
   const testimonials = [
     {
       quote: "Sim-Fluence has transformed how we approach social media marketing. The predictive analytics are incredibly accurate and have helped us optimize our content strategy.",
@@ -95,12 +96,21 @@ export default function Home() {
           <CustomNavbarLogo />
           <NavItems items={navItems} />
           <div className="relative z-20 flex flex-row items-center justify-end gap-2">
-            <NavbarButton href="/api/auth/login" variant="secondary">
-              Login
-            </NavbarButton>
-            <NavbarButton href="/signup">
-              Get Started
-            </NavbarButton>
+            <SignedOut>
+              <SignInButton mode="modal">
+                <NavbarButton as="button" variant="secondary">
+                  Login
+                </NavbarButton>
+              </SignInButton>
+              <SignUpButton mode="modal">
+                <NavbarButton as="button">
+                  Get Started
+                </NavbarButton>
+              </SignUpButton>
+            </SignedOut>
+            <SignedIn>
+              <UserButton afterSignOutUrl="/" />
+            </SignedIn>
           </div>
         </NavBody>
         
@@ -122,6 +132,23 @@ export default function Home() {
                 {item.name}
               </NavbarButton>
             ))}
+            <SignedOut>
+              <SignInButton mode="modal">
+                <NavbarButton as="button" variant="secondary" className="w-full justify-start">
+                  Login
+                </NavbarButton>
+              </SignInButton>
+              <SignUpButton mode="modal">
+                <NavbarButton as="button" className="w-full justify-start">
+                  Get Started
+                </NavbarButton>
+              </SignUpButton>
+            </SignedOut>
+            <SignedIn>
+              <div className="flex justify-center py-2">
+                <UserButton afterSignOutUrl="/" />
+              </div>
+            </SignedIn>
           </MobileNavMenu>
         </MobileNav>
       </Navbar>
