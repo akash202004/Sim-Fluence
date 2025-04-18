@@ -5,7 +5,7 @@ import {
   getSimulationById,
   updateSimulation,
   deleteSimulation,
-} from "../controllers/simulationControllers"
+} from "../controllers/simulationController"
 
 const router = Router();
 
