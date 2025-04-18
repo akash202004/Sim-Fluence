@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/resizable-navbar";
 import { useState, Suspense } from "react";
 import Link from "next/link";
+import Image from "next/image"; 
 import dynamic from 'next/dynamic';
 import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 
@@ -168,29 +169,30 @@ export default function Home() {
         <p className="text-xl mt-2 text-gray-400 max-w-2xl">
           Understand your social media influence with powerful analytics and simulation tools
         </p>
-        
-        {/* Hero banner image section - added before features */}
+       
         <div className="w-full max-w-6xl mt-10 mb-8">
           <div className="relative w-full h-[300px] md:h-[500px] rounded-xl overflow-hidden">
-            <img 
+            <Image 
               src={heroImage.src} 
               alt="Sim-Fluence Platform" 
               className="w-full h-full object-cover rounded-xl"
+              fill
+              priority
             />
             <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent">
-              {/* Text content removed */}
+             
             </div>
           </div>
         </div>
         
-        {/* Lazy load components with proper suspense boundaries */}
+      
         <Suspense fallback={<div className="w-full h-[400px] bg-black/20 rounded-lg animate-pulse"></div>}>
           <FeaturesSectionDemo />
         </Suspense>
         
         <div className="w-full max-w-6xl mt-16">
           <div className="flex flex-col md:flex-row gap-8 xl:border rounded-md dark:border-neutral-800 border-white/10 p-4 sm:p-8">
-            {/* Testimonials */}
+       
             <div className="md:w-2/3 md:border-r dark:border-neutral-800 border-white/10 pr-4 sm:pr-8">
               <Suspense fallback={<div className="w-full h-[400px] bg-black/20 rounded-lg animate-pulse"></div>}>
                 <AnimatedTestimonials 
@@ -199,8 +201,7 @@ export default function Home() {
                 />
               </Suspense>
             </div>
-            
-            {/* OrbitingCircles beside testimonials */}
+      
             <div className="relative md:w-1/3 h-[400px] overflow-hidden">
               <div className="absolute inset-0 flex items-center justify-center">
                 <OrbitingCircles className="text-white/70" iconSize={35}>

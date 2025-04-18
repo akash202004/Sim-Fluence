@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useId, useState, useMemo, useCallback } from "react";
+import React, { useEffect, useId, useState, useCallback } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { useRef } from "react";
 import { cn } from "@/lib/utils";
@@ -17,7 +17,7 @@ export const Cover = ({
   const [containerWidth, setContainerWidth] = useState(0);
   const [beamPositions, setBeamPositions] = useState<number[]>([]);
 
-  // Optimize the effect to run only when needed
+
   useEffect(() => {
     if (!ref.current) return;
     
@@ -26,7 +26,7 @@ export const Cover = ({
       
       setContainerWidth(ref.current.clientWidth);
       const height = ref.current.clientHeight;
-      // Reduce the number of beams for better performance
+
       const numberOfBeams = Math.min(Math.floor(height / 20), 10); 
       const positions = Array.from(
         { length: numberOfBeams },
@@ -37,12 +37,11 @@ export const Cover = ({
 
     updateDimensions();
     
-    // Add resize listener
+
     window.addEventListener('resize', updateDimensions);
     return () => window.removeEventListener('resize', updateDimensions);
   }, []);
 
-  // Memoize handlers to prevent unnecessary re-renders
   const handleMouseEnter = useCallback(() => setHovered(true), []);
   const handleMouseLeave = useCallback(() => setHovered(false), []);
 
@@ -79,7 +78,7 @@ export const Cover = ({
               }}
               className="w-[200%] h-full flex"
             >
-              {/* Reduce particle density for better performance */}
+       
               <SparklesCore
                 background="transparent"
                 minSize={0.4}
@@ -101,7 +100,7 @@ export const Cover = ({
         )}
       </AnimatePresence>
       
-      {/* Limit the number of beams rendered */}
+
       {beamPositions.slice(0, 5).map((position, index) => (
         <Beam
           key={index}
@@ -229,10 +228,9 @@ export const Beam = ({
 
 export const CircleIcon = ({
   className,
-  delay,
 }: {
   className?: string;
-  delay?: number;
+  delay?: number; 
 }) => {
   return (
     <div

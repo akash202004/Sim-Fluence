@@ -20,16 +20,15 @@ const nextConfig = {
     minimumCacheTTL: 60,
   },
   reactStrictMode: true,
-  // This will help with the hydration error by forcing client-side rendering
-  // for components that use random values
+  // Removed optimizeFonts as it's no longer recognized
   experimental: {
-    // This setting helps with components that generate random values
-    optimizeFonts: true,
     scrollRestoration: true,
-    // Add optimizations for production builds
     optimizePackageImports: ['motion'],
-    // Improve bundle size
     optimizeCss: true,
+  },
+  // Add tracing configuration
+  tracing: {
+    ignoreRootSpan: true
   }
 }
 
