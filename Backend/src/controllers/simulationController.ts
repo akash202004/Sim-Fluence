@@ -10,7 +10,7 @@ export const createSimulation = async (req: Request, res: Response) => {
       data: {
         title,
         content,
-        status, // Optional, defaults to PENDING if not provided
+        status, 
         userId,
         platform,
       },

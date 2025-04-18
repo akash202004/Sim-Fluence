@@ -35,10 +35,6 @@ model Simulation {
   user             User            @relation(fields: [userId], references: [id])
   
   platform         Platform          
-  impressions      Int             @default(0)
-  likesEstimate    Int             @default(0)
-  commentsEstimate Int             @default(0)
-
   agentReactions   AgentReaction[]
   summary          Summary?
   summaryId        String?
