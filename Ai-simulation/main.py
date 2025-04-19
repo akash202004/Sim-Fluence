@@ -1,7 +1,7 @@
-from langchain.chains import create_analysis_chain
-from mesa.model import SocialMediaModel
-from pydantic import BaseModel
 from fastapi import FastAPI
+from schemas.simulation import SimulationRequest, SimulationResponse
+from models.simulation_model import SocialMediaModel
+from services.suggestion_service import generate_suggestions
 
 # -----------------------------------------------------------------------------------------
 
@@ -107,19 +107,20 @@ if __name__ == "__main__":
 app = FastAPI()
 
 
-class SimulationRequest(BaseModel):
-    post_content: str
-    num_agnets: int = 200
-    steps: int = 10
+@app.post("/simulate", response_model=SimulationResponse)
+def simulate(request: SimulationRequest):
+    model = SocialMediaModel(num_agents=request.num_agents)
+    for _ in range(request.steps):
+        model.step()
 
+    reactions = model.reactions
+    estimated_likes = int(reactions * 0.6)  
+    estimated_comments = int(reactions * 0.4)  
+    suggestions = generate_suggestions(request.post_content)
 
-class SimulateResponse(BaseModel):
-    reactions: list[dict]
-    impressions: int
-    likes_estimate: int
-    comments_estimate: int
-    suggestions: list[str]
-
-
-@app.post("/simulate", response_model=SimulateResponse)
-# async def run_simulation(request: SimulationRequest):
+    return SimulationResponse(
+        reactions=reactions,
+        estimated_likes=estimated_likes,
+        estimated_comments=estimated_comments,
+        suggestions=suggestions
+    )
