@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { SimulationCharts } from "../components/SimulationCharts";
 
 // Define types based on Prisma schema
 type Platform = "FACEBOOK" | "INSTAGRAM" | "TWITTER" | "LINKEDIN";
@@ -133,13 +134,32 @@ export function SimulationSection() {
             reason: "Found this informative",
             sentiment: "neutral",
           },
+          {
+            agentName: "Student",
+            action: "Share",
+            reason: "Useful information for my peers",
+            sentiment: "positive",
+          },
+          {
+            agentName: "Business Owner",
+            action: "Ignore",
+            reason: "Not relevant to my business",
+            sentiment: "negative",
+          },
         ],
         summary: {
           summaryText: "This post is likely to perform well with your target audience.",
           toneCloud: { positive: 70, neutral: 20, negative: 10 },
           toneBreakdown: { informative: 60, engaging: 30, promotional: 10 },
           sectionFeedback: { intro: "Strong", body: "Good", conclusion: "Effective" },
-          engagementData: { impressions: 8500, likes: 750, comments: 120 },
+          engagementData: { 
+            impressions: 8500, 
+            likes: 750, 
+            comments: 120,
+            shares: 250,
+            saves: 180,
+            clicks: 420
+          },
           audienceMatch: "High",
           feedbackScore: 8,
         },
@@ -162,6 +182,35 @@ export function SimulationSection() {
       setIsAnalyzing(false);
     }, 2000);
   };
+
+  // Prepare chart data
+  const toneData = simulationResults?.summary?.toneCloud ? 
+    Object.entries(simulationResults.summary.toneCloud).map(([name, value]) => ({ name, value })) : [];
+  
+  const toneBreakdownData = simulationResults?.summary?.toneBreakdown ? 
+    Object.entries(simulationResults.summary.toneBreakdown).map(([name, value]) => ({ name, value })) : [];
+  
+  const engagementData = simulationResults?.summary?.engagementData ? 
+    Object.entries(simulationResults.summary.engagementData).map(([name, value]) => ({ name, value: Number(value) })) : [];
+  
+  const timeSeriesData = [
+    { name: 'Day 1', impressions: 1200, engagement: 300 },
+    { name: 'Day 2', impressions: 2400, engagement: 450 },
+    { name: 'Day 3', impressions: 1800, engagement: 380 },
+    { name: 'Day 4', impressions: 3200, engagement: 520 },
+    { name: 'Day 5', impressions: 2800, engagement: 490 },
+    { name: 'Day 6', impressions: 3600, engagement: 580 },
+    { name: 'Day 7', impressions: 4000, engagement: 620 },
+  ];
+
+  const demographicData = [
+    { subject: '18-24', A: 120, B: 110, fullMark: 150 },
+    { subject: '25-34', A: 98, B: 130, fullMark: 150 },
+    { subject: '35-44', A: 86, B: 130, fullMark: 150 },
+    { subject: '45-54', A: 99, B: 100, fullMark: 150 },
+    { subject: '55-64', A: 85, B: 90, fullMark: 150 },
+    { subject: '65+', A: 65, B: 85, fullMark: 150 },
+  ];
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">
@@ -307,7 +356,7 @@ export function SimulationSection() {
               </p>
             </div>
           ) : simulationResults ? (
-            <div className="space-y-6">
+            <div className="space-y-6 overflow-y-auto max-h-[800px] pr-2">
               <div>
                 <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200">
                   Engagement Metrics
@@ -327,6 +376,15 @@ export function SimulationSection() {
                   </div>
                 </div>
               </div>
+
+              {/* Charts Component */}
+              <SimulationCharts 
+                toneData={toneData}
+                toneBreakdownData={toneBreakdownData}
+                engagementData={engagementData}
+                timeSeriesData={timeSeriesData}
+                demographicData={demographicData}
+              />
 
               {simulationResults.summary && (
                 <>
@@ -476,4 +534,3 @@ export function SimulationSection() {
       </div>
     </div>
   );
-}
