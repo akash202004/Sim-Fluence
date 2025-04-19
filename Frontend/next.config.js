@@ -20,15 +20,10 @@ const nextConfig = {
     minimumCacheTTL: 60,
   },
   reactStrictMode: true,
-  // Removed optimizeFonts as it's no longer recognized
   experimental: {
     scrollRestoration: true,
     optimizePackageImports: ['motion'],
     optimizeCss: true,
-  },
-  // Add tracing configuration
-  tracing: {
-    ignoreRootSpan: true
   }
 }
 

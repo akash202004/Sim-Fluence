@@ -23,6 +23,7 @@ import person3 from "../public/testimonial/Nachiketa.jpg";
 import person4 from "../public/testimonial/MU.jpg"
 import { OrbitingCircles } from "@/components/ui/circle";
 import heroImage from "../public/hero/dashboard.jpeg"; // 
+
 const AnimatedTestimonials = dynamic(
   () => import('@/components/ui/animated-testimonials').then(mod => mod.AnimatedTestimonials),
   { 
@@ -110,7 +111,7 @@ export default function Home() {
               </SignUpButton>
             </SignedOut>
             <SignedIn>
-              <UserButton afterSignOutUrl="/" />
+              <UserButton afterSignOutUrl="/simulation" />
             </SignedIn>
           </div>
         </NavBody>
@@ -147,7 +148,7 @@ export default function Home() {
             </SignedOut>
             <SignedIn>
               <div className="flex justify-center py-2">
-                <UserButton afterSignOutUrl="/" />
+                <UserButton afterSignOutUrl="/simulation" />
               </div>
             </SignedIn>
           </MobileNavMenu>

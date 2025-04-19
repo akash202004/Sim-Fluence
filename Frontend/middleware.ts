@@ -1,12 +1,26 @@
 import { clerkMiddleware } from "@clerk/nextjs/server";
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 
 export default clerkMiddleware();
 
+export function middleware(request: NextRequest) {
+  // Simple middleware that doesn't do much, just to ensure it works
+  return NextResponse.next();
+}
+
+// Optional: Configure middleware to run only on specific paths
 export const config = {
   matcher: [
-    // Skip Next.js internals and all static files, unless found in search params
-    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
-    // Always run for API routes
-    '/(api|trpc)(.*)',
+    /*
+     * Match all request paths except:
+     * 1. /api routes
+     * 2. /_next (Next.js internals)
+     * 3. /fonts, /images (static files)
+     * 4. /_static (static files)
+     * 5. /_vercel (Vercel internals)
+     * 6. all root files inside public (favicon.ico, robots.txt, etc.)
+     */
+    '/((?!api|_next|_static|_vercel|fonts|images|[\\w-]+\\.\\w+).*)',
   ],
 };
