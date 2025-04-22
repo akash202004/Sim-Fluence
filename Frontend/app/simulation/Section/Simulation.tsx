@@ -185,10 +185,10 @@ export function SimulationSection() {
 
   // Prepare chart data
   const toneData = simulationResults?.summary?.toneCloud ? 
-    Object.entries(simulationResults.summary.toneCloud).map(([name, value]) => ({ name, value })) : [];
+    Object.entries(simulationResults.summary.toneCloud).map(([name, value]) => ({ name, value: Number(value) })) : [];
   
   const toneBreakdownData = simulationResults?.summary?.toneBreakdown ? 
-    Object.entries(simulationResults.summary.toneBreakdown).map(([name, value]) => ({ name, value })) : [];
+    Object.entries(simulationResults.summary.toneBreakdown).map(([name, value]) => ({ name, value: Number(value) })) : [];
   
   const engagementData = simulationResults?.summary?.engagementData ? 
     Object.entries(simulationResults.summary.engagementData).map(([name, value]) => ({ name, value: Number(value) })) : [];
@@ -214,11 +214,8 @@ export function SimulationSection() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">
-      <h1 className="text-3xl font-bold text-center mb-10 text-black dark:text-white">
-        Content Simulation
-      </h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="flex flex-col gap-8">
         {/* Create Simulation Section */}
         <div className="bg-white dark:bg-neutral-900 p-6 rounded-xl shadow-sm">
           <h2 className="text-xl font-semibold mb-4 text-black dark:text-white">
@@ -305,7 +302,7 @@ export function SimulationSection() {
                             src={URL.createObjectURL(file)}
                             alt={`Preview ${index}`}
                             fill
-                            className="object-cover"
+                            className="object-contain"
                             unoptimized // Add this to prevent optimization issues with blob URLs
                           />
                         ) : (
@@ -356,7 +353,7 @@ export function SimulationSection() {
               </p>
             </div>
           ) : simulationResults ? (
-            <div className="space-y-6 overflow-y-auto max-h-[800px] pr-2">
+            <div className="space-y-6">
               <div>
                 <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200">
                   Engagement Metrics
@@ -378,6 +375,7 @@ export function SimulationSection() {
               </div>
 
               {/* Charts Component */}
+              
               <SimulationCharts 
                 toneData={toneData}
                 toneBreakdownData={toneBreakdownData}
@@ -533,4 +531,5 @@ export function SimulationSection() {
         )}
       </div>
     </div>
-  );
+);
+}

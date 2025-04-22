@@ -5,6 +5,7 @@
   "main": "app.ts",
   "scripts": {
     "dev": "nodemon --exec ts-node src/app.ts",
+    "build": "tsc -b",
     "start": "ts-node src/app.ts",
     "postinstall": "npx prisma generate"
   },

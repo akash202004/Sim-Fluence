@@ -5,7 +5,6 @@ from services.langchain_service import generate_suggestions
 
 app = FastAPI()
 
-
 @app.post("/simulate", response_model=SimulationResponse)
 def simulate(request: SimulationRequest):
     model = SocialMediaModel(num_agents=request.num_agents)

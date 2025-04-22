@@ -14,6 +14,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'unsplash.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'plus.unsplash.com',
+      },
     ],
     // Add image optimization settings
     formats: ['image/avif', 'image/webp'],

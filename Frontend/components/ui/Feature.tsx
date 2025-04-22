@@ -112,8 +112,8 @@ export const SkeletonOne = () => {
         <div className="flex flex-1 w-full h-full flex-col space-y-2  ">
          
           <Image
-            src="/linear.webp"
-            alt="header"
+            src="https://images.unsplash.com/photo-1625314868143-20e93ce3ff33?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            alt="Audio mixer"
             width={800}
             height={800}
             className="h-full w-full aspect-square object-cover object-left-top rounded-sm"
@@ -138,7 +138,7 @@ export const SkeletonThree = () => {
         <div className="flex flex-1 w-full h-full flex-col space-y-2 relative">
           <IconBrandYoutubeFilled className="h-20 w-20 absolute z-10 inset-0 text-red-500 m-auto " />
           <Image
-            src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=2070"
+            src="https://images.unsplash.com/photo-1706759755820-0dbc35c19959?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt="Audio mixer"
             width={800}
             height={800}

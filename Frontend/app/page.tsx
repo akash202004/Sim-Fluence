@@ -40,6 +40,13 @@ const FeaturesSectionDemo = dynamic(
   }
 );
 
+const PricingPlans = dynamic(
+  () => import('@/components/ui/pricing-plans').then((mod) => mod.PricingPlans),
+  { 
+    ssr: false,
+    loading: () => <div className="w-full h-[400px] bg-black/20 rounded-lg animate-pulse"></div>
+  }
+);
 
 const CustomNavbarLogo = () => {
   return (
@@ -53,16 +60,25 @@ const CustomNavbarLogo = () => {
   );
 };
 
+// Move the Footer dynamic import outside of the component return statement
+const Footer = dynamic(
+  () => import('@/components/ui/footer').then((mod) => mod.Footer),
+  { 
+    ssr: false,
+    loading: () => <div className="w-full h-[200px] bg-black/20 animate-pulse"></div>
+  }
+);
+
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
   
+  // Update the navItems array in your home page
   const navItems = [
     { name: "Home", link: "/" },
-    { name: "Analytics", link: "/analytics" },
     { name: "Simulation", link: "/simulation" },
     { name: "About", link: "/about" },
   ];
-
+  
   
   const testimonials = [
     {
@@ -191,6 +207,8 @@ export default function Home() {
           <FeaturesSectionDemo />
         </Suspense>
         
+        {/* Remove PricingPlans from here */}
+        
         <div className="w-full max-w-6xl mt-16">
           <div className="flex flex-col md:flex-row gap-8 xl:border rounded-md dark:border-neutral-800 border-white/10 p-4 sm:p-8">
        
@@ -260,7 +278,17 @@ export default function Home() {
             </div>
           </div>
         </div>
+        
+        {/* Add PricingPlans component after testimonials */}
+        <Suspense fallback={<div className="w-full h-[400px] bg-black/20 rounded-lg animate-pulse"></div>}>
+          <PricingPlans />
+        </Suspense>
       </main>
+      
+    
+      <Suspense fallback={<div className="w-full h-[200px] bg-black/20 animate-pulse"></div>}>
+        <Footer />
+      </Suspense>
     </div>
   );
 }
