@@ -1,4 +1,4 @@
-# Sim-Fluence
+# Sim-Fluence - verify your audiance
 
 <p align="center">
   <img src="path/to/logo.png" alt="Sim-Fluence Logo" width="200"/>
